@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="GameHub - Platform terbaik untuk bermain, berdiskusi, dan membuat game. Mainkan game populer seperti VALORANT, Cyberpunk 2077, dan banyak lagi."
+    />
+    <title>GameHub</title>
+    <link
+      rel="website icon"
+      type="png"
+      href="img/Preview-removebg-preview.png"
+    />
+
+    <!-- font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- feather icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- style -->
+    <link rel="stylesheet" href="css/index.css" />
+
+    <!-- alpine.js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- app -->
+    <script src="src/app.js"></script>
+  </head>
+  <body>
+    <!-- Navbar start-->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Game<span>Hub</span></a>
+
+      <div class="navbar-nav">
+        <a href="#" class="">HOME</a>
+        <a href="#about" class="">ABOUT</a>
+        <a href="#support" class="">GAMES</a>
+        <a href="#genre" class="">GENRE</a>
+        <a href="#news" class="">NEWS</a>
+        <a href="#footer" class="">SOCIAL</a>
+      </div>
+
+      <div class="navbar-extra">
+        <div class="search-icon">
+          <input
+            type="text"
+            name="text"
+            class="input"
+            required=""
+            placeholder="Type to search..."
+          />
+          <div class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
+            >
+              <title>Search</title>
+              <path
+                d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
+                fill="none"
+                stroke="currentColor"
+                stroke-miterlimit="10"
+                stroke-width="32"
+              ></path>
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                stroke-width="32"
+                d="M338.29 338.29L448 448"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+
+        <div class="profile-dropdown">
+          <a href="#" class="profile-link">
+            <img
+              src="img/navbar img/blank-profile-picture-973460_1280.webp"
+              alt="User Avatar"
+              class="avatar"
+            />
+            <i class="arrow-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#"><i data-feather="user"></i> My Profile</a>
+            </li>
+            <li>
+              <a href="#"><i data-feather="settings"></i> Settings</a>
+            </li>
+            <li>
+              <a href="#"><i data-feather="log-out"></i> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- shopping-cart -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img :src="`img/games section/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button
+                  id="remove"
+                  @click.prevent="$store.cart.remove(item.id)"
+                >
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click.prevent="$store.cart.add(item)">
+                  &plus;
+                </button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <div class="no-items-container" x-show="!$store.cart.items.length">
+          <img
+            src="img/shoppingcart/document-file-not-found-search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
+            class="no-items-icon"
+          />
+          <h2 class="no-items-heading">No Items Found</h2>
+          <p class="no-items-subheading">go buy some items</p>
+          <a href="#support" class="shop-button">Shop Now</a>
+        </div>
+        <div class="total" x-show="$store.cart.items.length">
+          <h4>Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+        </div>
+      </div>
+      <!-- shopping-cart end -->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- hero section -->
+    <section class="hero" id="home">
+      <video autoplay muted loop class="video-bg">
+        <source
+          src="video/409ab2fc369ba5e1fe50bac10c6676d7d1365a9f.mp4"
+          type="video/mp4"
+        />
+        Browsermu tidak mendukung pemutaran video.
+      </video>
+      <main class="content">
+        <h1>VALORANT</h1>
+        <p>Best selling game right now. Play them now!!!</p>
+        <a href="RiotClientServices.exe" class="cta">PLAY NOW</a>
+      </main>
+      <div class="image-container">
+        <img
+          class="active"
+          src="img/hero section/valorant-characters-harbor.jpg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/clove-valorant-3840x2160-16045.jpeg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/valorant-characters-gekko.jpg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/valorant-characters-omen.jpg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/valorant-characters-reyna.jpg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/Valorant-Chamber-closeup.jpg"
+        />
+        <img
+          class="inactive"
+          src="img/hero section/StrongestValorantCharacters.png"
+        />
+      </div>
+    </section>
+    <!-- hero section end -->
+
+    <!-- about section -->
+    <section class="body-about">
+      <section class="about" id="about">
+        <h2>
+          What is <span class="game">Game<span class="hub">Hub</span></span>
+        </h2>
+      </section>
+      <div class="video-container">
+        <video controls>
+          <source
+            src="video/Fallout London - Official Launch Trailer.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="container">
+        <div class="logo">Game<span>Hub</span></div>
+        <div class="description">
+          GameHub adalah tempat terbaik untuk bermain, berdiskusi, dan membuat
+          game.
+        </div>
+        <div class="stats">
+          <div class="online">
+            <span>ONLINE</span>
+            <span>22,886,961</span>
+          </div>
+          <div class="playing">
+            <span>SEDANG BERMAIN</span>
+            <span>6,011,672</span>
+          </div>
+        </div>
+        <button class="btn">INSTALL GAMEHUB</button>
+        <div class="platforms">
+          Juga tersedia di:
+          <a href="www.apple.com" target="_blank"
+            ><img src="img/about section/apple.png" alt="Apple"
+          /></a>
+          <a href="www.android.com" target="_blank"
+            ><img src="img/about section/android.png" alt="Android"
+          /></a>
+          <a href="www.linux.com" target="_blank"
+            ><img src="img/about section/linux-logo.png" alt="Linux"
+          /></a>
+          <a href="www.google.com" target="_blank"
+            ><img src="img/about section/google.png" alt="Google"
+          /></a>
+        </div>
+      </div>
+    </section>
+    <!-- about section end -->
+
+    <!-- games section -->
+    <section class="body-support">
+      <section id="support" class="support" x-data="products">
+        <h2>
+          Recommended by
+          <span class="Game">Game<span class="Hub">Hub</span></span>
+        </h2>
+        <div class="slider">
+          <div class="slides">
+            <template x-for="(item, index) in items" x-key="index">
+              <div class="game-item">
+                <img :src="`img/games section/${item.img}`" :alt="item.name" />
+                <h3 x-text="item.name"></h3>
+                <p x-text="item.page"></p>
+                <div class="product-icons">
+                  <a href="#" @click.prevent="$store.cart.add(item)">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-shopping-cart"
+                      width="24"
+                      height="24"
+                    >
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path
+                        d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                      ></path>
+                    </svg>
+                  </a>
+                  <a href="#">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-eye"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                      ></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </a>
+                </div>
+                <div class="rating">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-star"
+                    width="24"
+                    height="24"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    ></polygon>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-star"
+                    width="24"
+                    height="24"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    ></polygon>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-star"
+                    width="24"
+                    height="24"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    ></polygon>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-star"
+                    width="24"
+                    height="24"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    ></polygon>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-star"
+                    width="24"
+                    height="24"
+                  >
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                    ></polygon>
+                  </svg>
+                </div>
+                <div class="price-container">
+                  <div
+                    class="product-price"
+                    @click.prevent="$store.cart.add(item)"
+                  >
+                    <span x-text="rupiah(item.price)"></span>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </section>
+    </section>
+    <!-- support section end -->
+
+    <!-- genre section -->
+    <section id="genre" class="genre">
+      <h2>Games Genre</h2>
+      <div class="horizontal-scroll-container">
+        <button class="slide-btn left">
+          <i data-feather="chevron-left"></i>
+        </button>
+        <div class="horizontal-scroll">
+          <div class="card">
+            <div class="genre-card action">
+              <h3>Action/Adventure</h3>
+              <p>
+                Games that emphasize physical challenges, including hand-eye
+                coordination and reaction-time.
+              </p>
+            </div>
+            <div class="genre-card rpg">
+              <h3>Role-Playing Games (RPGs)</h3>
+              <p>
+                Games where players assume the roles of characters in a
+                fictional setting.
+              </p>
+            </div>
+            <div class="genre-card fps">
+              <h3>First-Person Shooters (FPS)</h3>
+              <p>
+                Games that center the gameplay around gun and other weapon-based
+                combat through a first-person perspective.
+              </p>
+            </div>
+            <div class="genre-card sports">
+              <h3>Sports</h3>
+              <p>Games that simulate the practice of sports.</p>
+            </div>
+            <div class="genre-card battle-royale">
+              <h3>Battle Royale</h3>
+              <p>
+                Games that blend the survival, exploration, and scavenging
+                elements of a survival game with last-man-standing gameplay.
+              </p>
+            </div>
+            <div class="genre-card puzzle">
+              <h3>Puzzle</h3>
+              <p>
+                Games that emphasize puzzle solving, including logic, pattern
+                recognition, sequence solving, and word completion.
+              </p>
+            </div>
+            <div class="genre-card simulation">
+              <h3>Simulation</h3>
+              <p>
+                Games that simulate real-world or fictional activities, like
+                flight simulators and life simulation games.
+              </p>
+            </div>
+            <div class="genre-card strategy">
+              <h3>Strategy</h3>
+              <p>
+                Games that emphasize strategic or tactical planning and resource
+                management.
+              </p>
+            </div>
+            <div class="genre-card racing">
+              <h3>Racing</h3>
+              <p>
+                Games where players compete in racing competitions, typically
+                using vehicles.
+              </p>
+            </div>
+            <div class="genre-card horror">
+              <h3>Horror</h3>
+              <p>
+                Games that aim to scare the player through atmosphere, enemies,
+                and story elements.
+              </p>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn right">
+          <i data-feather="chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- promo section end -->
+
+    <!-- news section -->
+    <section id="news" class="news">
+      <div class="articles-section">
+        <h2>ARTIKEL TERBARU</h2>
+        <div class="articles-container">
+          <div id="pool" class="pool">
+            <div class="article">
+              <img
+                src="img/news section/c6c50b680c5e1846a9c77f86d5aa357d46584ffe-1920x1080.webp"
+                alt="Article Image 1"
+              />
+              <p class="tag">PEMBARUAN GAME | 2 minggu yang lalu</p>
+              <h3>
+                <a
+                  href="https://playvalorant.com/id-id/news/game-updates/valorant-patch-notes-901/"
+                  target="_blank"
+                  >Catatan Patch VALORANT 9.01</a
+                >
+              </h3>
+              <p>Pemain konsol: waktunya menjajal strat Lotus.</p>
+            </div>
+            <div class="article">
+              <img
+                src="img/news section/d3596a906b6f6d0563a441646231064faa17b261-1920x1080.webp"
+                alt="Article Image 2"
+              />
+              <p class="tag">9 bulan yang lalu</p>
+              <h3>
+                <a
+                  href="https://valorantesports.com/id-ID/news/introducing-2024-vct-challengers/"
+                  target="_blank"
+                  >Memperkenalkan VCT Challengers 2024</a
+                >
+              </h3>
+              <p>
+                Detail hal yang akan dibagikan dari VALORANT CHALLENGERS 2024
+              </p>
+            </div>
+            <div class="article">
+              <img
+                src="img/news section/bbfd203ef66d38bd4fe14a2349279c4ba218165c-1920x1080.webp"
+                alt="Article Image 3"
+              />
+              <p class="tag">PEMBARUAN GAME | bulan lalu</p>
+              <h3>
+                <a
+                  href="https://www.youtube.com/watch?v=i0cTM-zxrQo"
+                  target="_blank"
+                  >Pengenalan Skin Evori Dreamwings</a
+                >
+              </h3>
+              <p>
+                Jangan pernah beraksi sendirian dengan Evori Dreamwings, skin
+                baru yang akan datang.
+              </p>
+            </div>
+            <div class="article">
+              <img
+                src="img/news section/game-starfield-primary.jpg"
+                alt="Starfield"
+              />
+              <p class="tag">PEMBARUAN GAME | Agustus 2023</p>
+              <h3>
+                <a
+                  href="https://eraspace.com/artikel/post/bethesda-softworks-luncurkan-game-starfield-action-rpg-terbaru"
+                  target="_blank"
+                  >Bethesda Luncurkan Starfield: Eksplorasi Ruang Angkasa yang
+                  Dinantikan</a
+                >
+              </h3>
+              <p>
+                Bethesda merilis "Starfield," game open-world yang memungkinkan
+                pemain menjelajahi ruang angkasa dan planet dengan kebebasan
+                yang luas. Ini adalah salah satu peluncuran game terbesar tahun
+                ini.
+              </p>
+            </div>
+
+            <div class="article">
+              <img
+                src="img/news section/Review-Hogwarts-Legacy-Indonesia-dari-dafunda-game-1140x639.jpg"
+                alt="Hogwarts Legacy"
+              />
+              <p class="tag">PEMBARUAN GAME | Februari 2023</p>
+              <h3>
+                <a
+                  href="https://dafunda.com/game/review-hogwarts-legacy/"
+                  target="_blank"
+                  >Hogwarts Legacy Hadir dengan Pengalaman Magis Baru</a
+                >
+              </h3>
+              <p>
+                "Hogwarts Legacy" diluncurkan, membawa pemain ke dunia Harry
+                Potter dengan grafik yang memukau dan cerita yang mendalam. Game
+                ini mendapat ulasan positif dari para penggemar dan kritikus.
+              </p>
+            </div>
+
+            <div class="article">
+              <img
+                src="img/news section/th.jpg"
+                alt="The Legend of Zelda: Tears of the Kingdom"
+              />
+              <p class="tag">PEMBARUAN GAME | Mei 2023</p>
+              <h3>
+                <a
+                  href="https://www.ign.com/games/the-legend-of-zelda-tears-of-the-kingdom"
+                  target="_blank"
+                  >The Legend of Zelda: Tears of the Kingdom Memperluas Dunia
+                  Link</a
+                >
+              </h3>
+              <p>
+                Sekuel dari "Breath of the Wild" ini menawarkan dunia yang lebih
+                luas dan banyak fitur baru. Game ini mendapat pujian tinggi
+                untuk inovasi dan kedalaman cerita.
+              </p>
+            </div>
+
+            <div class="article">
+              <img
+                src="img/news section/asscred.jpg"
+                alt="Assassin's Creed Mirage"
+              />
+              <p class="tag">PEMBARUAN GAME | Oktober 2023</p>
+              <h3>
+                <a
+                  href="https://gamebrott.com/review-assassins-creed-mirage-kembali-ke-akar-seri"
+                  target="_blank"
+                  >Assassin's Creed Mirage: Kembali ke Akar dengan Setting Kota
+                  yang Menarik</a
+                >
+              </h3>
+              <p>
+                Ubisoft mengumumkan "Assassin's Creed Mirage," yang
+                mengembalikan seri ke setting kota yang lebih compact dengan
+                fokus pada cerita dan gameplay yang mendalam.
+              </p>
+            </div>
+
+            <div class="article">
+              <img
+                src="img/news section/Review-Final-Fantasy-XVI-1-1024x576.jpg"
+                alt="Final Fantasy XVI"
+              />
+              <p class="tag">PEMBARUAN GAME | Juni 2023</p>
+              <h3>
+                <a
+                  href="https://gamebrott.com/review-final-fantasy-xvi/"
+                  target="_blank"
+                  >Final Fantasy XVI: RPG Baru dengan Cerita dan Dunia yang
+                  Kaya</a
+                >
+              </h3>
+              <p>
+                Versi terbaru dari seri Final Fantasy ini menawarkan pengalaman
+                RPG yang mendalam dengan dunia yang kaya dan cerita yang
+                menarik. Game ini telah mendapatkan sambutan hangat dari
+                komunitas penggemar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- news section end -->
+
+    <!-- footer -->
+    <section id="footer" class="footer">
+      <footer class="footer">
+        <div class="footer-top">
+          <a href="#" class="download-game">Support Us</a>
+        </div>
+        <div class="footer-middle">
+          <a
+            href="#"
+            class="social-icon"
+            aria-label="Facebook"
+            data-feather="facebook"
+          ></a>
+          <a
+            href="#"
+            class="social-icon"
+            aria-label="YouTube"
+            data-feather="youtube"
+          ></a>
+          <a
+            href="#"
+            class="social-icon"
+            aria-label="Instagram"
+            data-feather="instagram"
+          ></a>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2020-2024 Game Hub, Inc. Game Hub, developer : @bioo_aj.</p>
+          <p>Thanks to Visual Studio Code, books, etc.</p>
+          <p>Indonesia</p>
+          <div class="footer-links">
+            <a href="#">KEBIJAKAN PRIVASI</a>
+            <a href="#">KETENTUAN PENGGUNAAN</a>
+            <a href="#">PREFERENSI COOKIE</a>
+          </div>
+        </div>
+      </footer>
+    </section>
+    <!-- footer end -->
+
+    <!-- modal box -->
+    <div class="modal1" id="item-detail-punker">
+      <div class="modal-container">
+        <a href="#" class="close1"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/modal box/1330765.png" alt="Cyberpunk" />
+          <div class="product-content">
+            <h3>Cyberpunk 2077</h3>
+            <p>
+              Cyberpunk 2077 adalah game aksi-RPG open-world yang dikembangkan
+              oleh CD Projekt Red. Berlatar belakang di Night City, kota
+              futuristik yang penuh dengan teknologi tinggi dan kriminalitas,
+              pemain berperan sebagai V, seorang mercenary yang dapat
+              disesuaikan dengan berbagai keterampilan dan pilihan moral. Game
+              ini terkenal dengan cerita mendalam, grafis yang memukau, dan
+              sistem gameplay yang kompleks. Meskipun peluncurannya awalnya
+              dikritik karena bug dan masalah teknis, game ini telah menerima
+              pembaruan besar yang memperbaiki banyak masalah tersebut.
+            </p>
+            <a href="#" class="add-to-cart"
+              ><i data-feather="shopping-cart"></i> <span>Add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal2" id="item-detail-witch">
+      <div class="modal-container">
+        <a href="#" class="close2"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/modal box/1296879.png" alt="TheWitcher" />
+          <div class="product-content">
+            <h3>The Witcher III : WILD HUNT</h3>
+            <p>
+              The Witcher 3: Wild Hunt adalah RPG open-world yang dikembangkan
+              oleh CD Projekt Red. Game ini mengikuti kisah Geralt of Rivia,
+              seorang Witcher yang mencari putrinya yang hilang di dunia yang
+              dilanda perang dan sihir. Dengan cerita yang kuat, dunia yang luas
+              dan penuh detail, serta sistem pertempuran yang mendalam, game ini
+              dianggap sebagai salah satu RPG terbaik sepanjang masa.
+              Fitur-fitur seperti quest sampingan yang menarik dan ekspansi
+              cerita yang menambah pengalaman membuatnya sangat dihargai oleh
+              pemain dan kritikus.
+            </p>
+            <a href="#" class="add-to-cart"
+              ><i data-feather="shopping-cart"></i> <span>Add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal3" id="item-detail-valo">
+      <div class="modal-container">
+        <a href="#" class="close3"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/modal box/1360655.png" alt="Valorant" />
+          <div class="product-content">
+            <h3>Valorant</h3>
+            <p>
+              Valorant adalah game FPS taktis yang dikembangkan oleh Riot Games.
+              Menggabungkan elemen strategi dan kemampuan unik dari setiap agen,
+              game ini menawarkan pertempuran 5v5 yang intens di berbagai peta
+              dengan tujuan utama adalah menanam atau menjinakkan bom. Dengan
+              fokus pada keakuratan tembakan dan penggunaan kemampuan agen
+              secara strategis, Valorant telah mendapatkan popularitas besar di
+              kalangan komunitas esports dan pemain yang menyukai game taktis
+              dengan elemen skill yang tinggi.
+            </p>
+            <a href="#" class="add-to-cart"
+              ><i data-feather="shopping-cart"></i> <span>Add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img
+            src="img/games section/703718-ghost-of-tsushima-hd-wallpaper-and-background-image.png"
+            alt="GOT"
+          />
+          <div class="product-content">
+            <h3>Ghost Of Tsushima</h3>
+            <p>
+              Ghost of Tsushima adalah game aksi-petualangan yang dikembangkan
+              oleh Sucker Punch Productions. Berlatar belakang di Jepang feodal
+              selama invasi Mongol, pemain mengendalikan Jin Sakai, seorang
+              samurai yang berusaha membebaskan tanahnya dari penjajah. Game ini
+              menawarkan sistem pertempuran yang fluid, grafik yang menawan
+              dengan gaya visual yang terinspirasi oleh film samurai klasik, dan
+              dunia terbuka yang indah untuk dijelajahi. Cerita dan gameplay-nya
+              mendapatkan pujian karena kedalaman dan keautentikan budaya
+              Jepang.
+            </p>
+            <a href="#" class="add-to-cart"
+              ><i data-feather="shopping-cart"></i> <span>Add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal4" id="item-detail-had">
+      <div class="modal-container">
+        <a href="#" class="close4"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/games section/1151800.png" alt="GOT" />
+          <div class="product-content">
+            <h3>Hades</h3>
+            <p>
+              Hades adalah game roguelike dungeon crawler yang dikembangkan oleh
+              Supergiant Games. Pemain mengambil peran sebagai Zagreus, putra
+              Hades, yang berusaha melarikan diri dari Dunia Bawah dan mencapai
+              Olympus. Dengan sistem pertempuran yang dinamis, narasi yang kuat,
+              dan desain karakter yang memikat, Hades menawarkan pengalaman
+              gameplay yang memikat dengan elemen cerita yang berkembang seiring
+              kemajuan pemain. Game ini sangat dipuji karena mekanik gameplay
+              yang solid, grafis artistik, dan kedalaman cerita yang menarik.
+            </p>
+            <a href="#" class="add-to-cart"
+              ><i data-feather="shopping-cart"></i> <span>Add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal box end -->
+
+    <!-- feather icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
